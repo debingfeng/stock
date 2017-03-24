@@ -1,17 +1,18 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name stockApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the stockApp
- */
 angular.module('stockApp')
-  .controller('MainCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+	.controller('MainCtrl', function ($scope, $location, WatchlistService) {
+		// [1] Populate watchlists for dynamic nav links
+		$scope.watchlists = WatchlistService.query();
+
+		// [2] Using the $location.path() function as a $watch expression
+		$scope.$watch(function () {
+			return $location.path();
+		}, function (path) {
+			if (_.includes(path, 'watchlist')) {
+				$scope.activeView = 'watchlist';
+			} else {
+				$scope.activeView = 'dashboard';
+			}
+		});
+	});

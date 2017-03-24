@@ -7,14 +7,16 @@
  * # stkWatchlistPanel
  */
 angular.module('stockApp')
-	.directive('stkWatchlistPanel', function ($location,$modal,WatchlistService) {
+	.directive('stkWatchlistPanel', function ($location,$modal,WatchlistService,$routeParams) {
 		return {
 			templateUrl: 'views/templates/watchlist-panel.html',
 			restrict: 'E',
 			scope: {},
-			link: function postLink($scope, element, attrs) {
-				// element.text('this is the stkWatchlistPanel directive');
+			link: function postLink($scope) {
+
+				// Initialize variables
 				$scope.watchlist = {};
+				$scope.currentList = $routeParams.listId;
 
 				var addListModel = $modal({
 					scope: $scope,
@@ -42,7 +44,12 @@ angular.module('stockApp')
 				$scope.deleteList = function (list) {
 					WatchlistService.remove(list);
 					$location.path('/');
-				}
+				};
+
+				// Send users to desired watchlist view
+				$scope.gotoList = function (listId) {
+					$location.path('watchlist/' + listId);
+				};
 			}
 		};
 	});

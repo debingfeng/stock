@@ -12,7 +12,7 @@
             用 <span class="glyphicon glyphicon-plus"></span>来创建监视列表
         </div>
         <div class="list-group">
-            <a href="" class="list-group-item" ng-repeat="list in watchlists">
+            <a href="" ng-click="gotoList(list.id)" class="list-group-item" ng-class="{ active: currentList == list.id }" ng-repeat="list in watchlists">
                 {{list.name}}
                 <button type="button" class="close" ng-click="deleteList(list)">&times;</button>
             </a>
